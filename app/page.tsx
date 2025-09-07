@@ -3,6 +3,8 @@ import { prisma } from "@/lib/prisma";
 export default async function Home() {
   const categories = await prisma.category.findMany();
   const trips = await prisma.trip.findMany();
+
+  console.log(trips);
   return (
     <div >
       {categories.map((category) => (

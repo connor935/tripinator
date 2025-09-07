@@ -1,10 +1,10 @@
 import { prisma } from "@/lib/prisma";
 
-export default async function TripPage({ params }: { params: { id: string } }) {
-  const { id } = params
+export default async function TripPage(props: { params: Promise<{ id: string }> }) {
+  const params = await props.params;
   const trip = await prisma.trip.findUnique({
     where: {
-      id: id,
+      id: params.id,
     },
   });
 
