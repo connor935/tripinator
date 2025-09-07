@@ -15,25 +15,28 @@ datasource db {
 }
 
 model User {
-  id         Int         @id @default(autoincrement())
-  email      String      @unique
-  name       String
-  password   String
-  userGroups UserGroup[]
+  id       String @id @default(ulid())
+  email    String @unique
+  name     String
+  password String
 }
 
-model UserGroup {
-  id          Int    @id @default(autoincrement())
-  name        String
-  description String
-  users       User[]
-  trips       Trip[]
+model Category {
+  id    String @id @default(ulid())
+  name  String
+  trips Trip[]
 }
 
 model Trip {
-  id          Int       @id @default(autoincrement())
-  name        String
-  description String
-  userGroupId Int
-  userGroup   UserGroup @relation(fields: [userGroupId], references: [id])
+  id            String   @id @default(ulid())
+  name          String
+  categoryId    String
+  category      Category @relation(fields: [categoryId], references: [id])
+  costPerPerson Float
+  address       String
+  country       String
+  indoor        Boolean
+  link          String
+  description   String
+  userGroupId   String
 }
