@@ -3,23 +3,22 @@ import "./globals.css";
 import { Navigation } from "@/components/navigation";
 
 export const metadata: Metadata = {
-  title: "Trippinator - Choose Your Next Adventure",
-  description: "A web app to help you randomly choose your next activity or trip",
+	title: "Trippinator - Choose Your Next Adventure",
+	description:
+		"A web app to help you randomly choose your next activity or trip",
 };
 
 export default function RootLayout({
-  children,
+	children,
 }: Readonly<{
-  children: React.ReactNode;
+	children: React.ReactNode;
 }>) {
-  return (
-    <html lang="en">
-      <body>
-        <Navigation />
-        <main>
-          {children}
-        </main>
-      </body>
-    </html>
-  );
+	return (
+		<html lang="en">
+			<body>
+				<Navigation />
+				<main>{children}</main>
+			</body>
+		</html>
+	);
 }

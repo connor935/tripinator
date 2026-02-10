@@ -1,8 +1,8 @@
 'use server';
 
-import { prisma } from "@/lib/prisma";
-import { Trip } from "@/generated/prisma";
 import { revalidatePath } from "next/cache";
+import type { Trip } from "@/generated/prisma";
+import { prisma } from "@/lib/prisma";
 
 type CreateTripInput = Omit<Trip, 'id' | 'createdAt' | 'updatedAt' | 'lastDone' | 'timesCompleted'>;
 

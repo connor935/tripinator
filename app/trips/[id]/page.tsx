@@ -5,81 +5,90 @@ import { Button } from "@/components/ui/button";
 import { markTripDone } from "@/app/_actions/actions";
 import { DeleteTripButton } from "@/components/delete-trip-button";
 
-export default async function TripDetailsPage(props: { params: Promise<{ id: string }> }) {
-  const params = await props.params;
-  const trip = await prisma.trip.findUnique({
-    where: {
-      id: params.id,
-    },
-    include: { category: true }
-  });
+export default async function TripDetailsPage(props: {
+	params: Promise<{ id: string }>;
+}) {
+	const params = await props.params;
+	const trip = await prisma.trip.findUnique({
+		where: {
+			id: params.id,
+		},
+		include: { category: true },
+	});
 
-  if (!trip) {
-    notFound();
-  }
+	if (!trip) {
+		notFound();
+	}
 
-  return (
-    <div className="container mx-auto px-4 py-8 max-w-3xl">
-      <Link href="/" className="text-sm text-blue-600 hover:underline mb-4 inline-block">
-        ← Back to Home
-      </Link>
+	return (
+		<div className="container mx-auto px-4 py-8 max-w-3xl">
+			<Link
+				href="/"
+				className="text-sm text-blue-600 hover:underline mb-4 inline-block"
+			>
+				← Back to Home
+			</Link>
 
-      <div className="space-y-6">
-        <div>
-          <h1 className="text-4xl font-bold">{trip.name}</h1>
-          <div className="flex gap-2 mt-2 flex-wrap">
-            <span className="px-3 py-1 bg-blue-100 text-blue-700 rounded text-sm">
-              {trip.category.name}
-            </span>
-            <span className="px-3 py-1 bg-gray-100 text-gray-700 rounded text-sm">
-              {trip.indoor ? '🏠 Indoor' : '🌳 Outdoor'}
-            </span>
-          </div>
-        </div>
+			<div className="space-y-6">
+				<div>
+					<h1 className="text-4xl font-bold">{trip.name}</h1>
+					<div className="flex gap-2 mt-2 flex-wrap">
+						<span className="px-3 py-1 bg-blue-100 text-blue-700 rounded text-sm">
+							{trip.category.name}
+						</span>
+						<span className="px-3 py-1 bg-gray-100 text-gray-700 rounded text-sm">
+							{trip.indoor ? "🏠 Indoor" : "🌳 Outdoor"}
+						</span>
+					</div>
+				</div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div>
-            <p className="text-sm text-muted-foreground">Location</p>
-            <p className="font-medium">{trip.address}</p>
-            <p className="text-sm">{trip.country}</p>
-          </div>
-          {trip.costPerPerson !== null && (
-            <div>
-              <p className="text-sm text-muted-foreground">Cost</p>
-              <p className="font-medium">{trip.costPerPerson} € per person</p>
-            </div>
-          )}
-        </div>
+				<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+					<div>
+						<p className="text-sm text-muted-foreground">Location</p>
+						<p className="font-medium">{trip.address}</p>
+						<p className="text-sm">{trip.country}</p>
+					</div>
+					{trip.costPerPerson !== null && (
+						<div>
+							<p className="text-sm text-muted-foreground">Cost</p>
+							<p className="font-medium">{trip.costPerPerson} € per person</p>
+						</div>
+					)}
+				</div>
 
-        {trip.description && (
-          <div>
-            <p className="text-sm text-muted-foreground">Description</p>
-            <p className="mt-1">{trip.description}</p>
-          </div>
-        )}
+				{trip.description && (
+					<div>
+						<p className="text-sm text-muted-foreground">Description</p>
+						<p className="mt-1">{trip.description}</p>
+					</div>
+				)}
 
-        {trip.lastDone && (
-          <div>
-            <p className="text-sm text-muted-foreground">History</p>
-            <p>Last done: {new Date(trip.lastDone).toLocaleDateString()}</p>
-            <p className="text-sm">Completed {trip.timesCompleted} times</p>
-          </div>
-        )}
+				{trip.lastDone && (
+					<div>
+						<p className="text-sm text-muted-foreground">History</p>
+						<p>Last done: {new Date(trip.lastDone).toLocaleDateString()}</p>
+						<p className="text-sm">Completed {trip.timesCompleted} times</p>
+					</div>
+				)}
 
-        <div className="flex gap-2 flex-wrap">
-          <form action={markTripDone.bind(null, trip.id)}>
-            <Button type="submit">✅ Mark as Done</Button>
-          </form>
-          {trip.link && (
-            <Button asChild variant="secondary">
-              <a href={trip.link} target="_blank" rel="noopener noreferrer">
-                🔗 External Link
-              </a>
-            </Button>
-          )}
-          <DeleteTripButton tripId={trip.id} tripName={trip.name} />
-        </div>
-      </div>
-    </div>
-  );
+				<div className="flex gap-2 flex-wrap">
+					<form
+						action={async () => {
+							await markTripDone(trip.id);
+						}}
+					>
+						<Button type="submit">✅ Mark as Done</Button>
+					</form>
+					{trip.link && (
+						<Button asChild variant="secondary">
+							<a href={trip.link} target="_blank" rel="noopener noreferrer">
+								🔗 External Link
+							</a>
+						</Button>
+					)}
+					<DeleteTripButton tripId={trip.id} tripName={trip.name} />
+				</div>
+			</div>
+		</div>
+	);
 }
