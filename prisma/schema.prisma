@@ -32,14 +32,18 @@ model Category {
 }
 
 model Trip {
-  id            String   @id @default(ulid())
-  name          String
-  categoryId    String
-  category      Category @relation(fields: [categoryId], references: [id])
-  costPerPerson Float?   @default(0)
-  address       String
-  country       String
-  indoor        Boolean  @default(false)
-  link          String?
-  description   String?
+  id             String    @id @default(ulid())
+  name           String
+  categoryId     String
+  category       Category  @relation(fields: [categoryId], references: [id])
+  costPerPerson  Float?    @default(0)
+  address        String
+  country        String
+  indoor         Boolean   @default(false)
+  link           String?
+  description    String?
+  lastDone       DateTime?
+  timesCompleted Int       @default(0)
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
 }
