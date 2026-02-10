@@ -46,7 +46,6 @@ export default function AddTripForm({ categories }: { categories: Category[] }) 
   const indoor = watch("indoor");
 
   const onSubmit = (data: TripFormData) => {
-    console.log("Form data:", data);
     startTransition(async () => {
       const result = await createTrip(data);
       if (result.success) {
