@@ -1,0 +1,106 @@
+{
+	"nav": {
+		"logo": "Trippinator",
+		"home": "Home",
+		"categories": "Categories",
+		"addTrip": "Add Trip"
+	},
+	"home": {
+		"heroTitle": "Choose Your Next Adventure",
+		"allActivities": "All Activities ({{count}})",
+		"noActivities": "No activities yet. Add your first trip to get started!"
+	},
+	"tripPicker": {
+		"pickActivity": "Pick an Activity",
+		"hideFilters": "Hide Filters",
+		"showFilters": "Show Filters",
+		"activitiesAvailable_one": "{{count}} activity available",
+		"activitiesAvailable_other": "{{count}} activities available",
+		"noMatch": "No trips match your filters!",
+		"indoorOutdoor": "Indoor/Outdoor",
+		"indoor": "Indoor",
+		"outdoor": "Outdoor",
+		"categoriesLabel": "Categories",
+		"maxCost": "Max Cost: {{value}} €",
+		"excludeRecent": "Exclude trips done in last 30 days",
+		"category": "Category",
+		"location": "Location",
+		"cost": "Cost",
+		"costPerPerson": "{{cost}} € per person",
+		"type": "Type",
+		"description": "Description",
+		"lastDone": "Last Done",
+		"completedTimes": "Completed {{count}} times",
+		"pickAgain": "Pick Again",
+		"markAsDone": "Mark as Done",
+		"link": "Link"
+	},
+	"tripCard": {
+		"indoor": "Indoor",
+		"outdoor": "Outdoor",
+		"costPerPerson": "€{{cost}} per person",
+		"lastDone": "Last done: {{date}}"
+	},
+	"tripDetails": {
+		"backToHome": "← Back to Home",
+		"location": "Location",
+		"cost": "Cost",
+		"costPerPerson": "{{cost}} € per person",
+		"description": "Description",
+		"history": "History",
+		"lastDone": "Last done: {{date}}",
+		"completedTimes": "Completed {{count}} times",
+		"markAsDone": "Mark as Done",
+		"externalLink": "External Link",
+		"indoor": "Indoor",
+		"outdoor": "Outdoor"
+	},
+	"addTrip": {
+		"pageTitle": "Add New Trip",
+		"noCategories": "No categories found. Please create a category first.",
+		"tripName": "Trip Name *",
+		"tripNamePlaceholder": "e.g., Museum Visit",
+		"category": "Category *",
+		"selectCategory": "Select a category",
+		"address": "Address *",
+		"addressPlaceholder": "e.g., 123 Main St",
+		"country": "Country *",
+		"countryPlaceholder": "e.g., USA",
+		"costPerPerson": "Cost Per Person (€)",
+		"indoorActivity": "Indoor activity",
+		"externalLink": "External Link",
+		"description": "Description",
+		"descriptionPlaceholder": "Tell us more about this activity...",
+		"submitting": "Adding Trip...",
+		"submit": "Add Trip",
+		"failedToAdd": "Failed to add trip. Please try again."
+	},
+	"categories": {
+		"backToHome": "← Back to Home",
+		"pageTitle": "Manage Categories",
+		"pageDescription": "Organize your trips by creating and managing categories",
+		"addNewCategory": "Add New Category",
+		"allCategories": "All Categories ({{count}})",
+		"noCategories": "No categories yet. Create your first category above!"
+	},
+	"categoryCard": {
+		"tripCount_one": "{{count}} trip",
+		"tripCount_other": "{{count}} trips",
+		"cannotDelete": "Cannot delete \"{{name}}\" because it has {{count}} trip(s). Please delete or reassign the trips first.",
+		"confirmDelete": "Are you sure you want to delete the category \"{{name}}\"?",
+		"failedToDelete": "Failed to delete category"
+	},
+	"addCategory": {
+		"placeholder": "Category name (e.g., Museums, Restaurants)",
+		"submitting": "Adding...",
+		"submit": "Add Category",
+		"validationEmpty": "Please enter a category name",
+		"failedToCreate": "Failed to create category"
+	},
+	"deleteTrip": {
+		"confirmMessage": "Are you sure you want to delete \"{{name}}\"? This action cannot be undone.",
+		"deleting": "Deleting...",
+		"deleteButton": "Delete Trip",
+		"failedToDelete": "Failed to delete trip"
+	}
+}

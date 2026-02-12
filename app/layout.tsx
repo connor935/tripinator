@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { I18nProvider } from "@/components/i18n-provider";
 import { Navigation } from "@/components/navigation";
 
 export const metadata: Metadata = {
@@ -16,8 +17,10 @@ export default function RootLayout({
 	return (
 		<html lang="en">
 			<body>
-				<Navigation />
-				<main>{children}</main>
+				<I18nProvider>
+					<Navigation />
+					<main>{children}</main>
+				</I18nProvider>
 			</body>
 		</html>
 	);

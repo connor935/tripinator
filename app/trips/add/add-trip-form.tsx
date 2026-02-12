@@ -1,16 +1,16 @@
 "use client";
 
-import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { useTransition } from "react";
-import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { useTranslation } from "react-i18next";
 import type * as z from "zod";
-import { type Category, TripSchema } from "@/prisma/generated/zod";
-import { Input } from "@/components/ui/input";
+import { createTrip } from "@/app/_actions/actions";
 import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
-import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import {
 	Select,
 	SelectContent,
@@ -18,7 +18,8 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/components/ui/select";
-import { createTrip } from "@/app/_actions/actions";
+import { Textarea } from "@/components/ui/textarea";
+import { type Category, TripSchema } from "@/prisma/generated/zod";
 
 // Create a schema that omits auto-generated and tracking fields
 const TripFormSchema = TripSchema.omit({
@@ -38,6 +39,7 @@ export default function AddTripForm({
 }) {
 	const [isPending, startTransition] = useTransition();
 	const router = useRouter();
+	const { t } = useTranslation();
 
 	const {
 		register,
@@ -62,7 +64,7 @@ export default function AddTripForm({
 				router.push("/");
 			} else {
 				console.error(result.error);
-				alert("Failed to add trip. Please try again.");
+				alert(t("addTrip.failedToAdd"));
 			}
 		});
 	};
@@ -73,23 +75,23 @@ export default function AddTripForm({
 			className="flex flex-col gap-4 w-full max-w-md"
 		>
 			<div className="space-y-2">
-				<Label htmlFor="name">Trip Name *</Label>
+				<Label htmlFor="name">{t("addTrip.tripName")}</Label>
 				<Input
 					id="name"
 					{...register("name")}
-					placeholder="e.g., Museum Visit"
+					placeholder={t("addTrip.tripNamePlaceholder")}
 					errorMessage={errors?.name?.message}
 				/>
 			</div>
 
 			<div className="space-y-2">
-				<Label htmlFor="categoryId">Category *</Label>
+				<Label htmlFor="categoryId">{t("addTrip.category")}</Label>
 				<Select
 					onValueChange={(value) => setValue("categoryId", value)}
 					defaultValue={categories[0]?.id}
 				>
 					<SelectTrigger id="categoryId">
-						<SelectValue placeholder="Select a category" />
+						<SelectValue placeholder={t("addTrip.selectCategory")} />
 					</SelectTrigger>
 					<SelectContent>
 						{categories.map((category) => (
@@ -105,27 +107,27 @@ export default function AddTripForm({
 			</div>
 
 			<div className="space-y-2">
-				<Label htmlFor="address">Address *</Label>
+				<Label htmlFor="address">{t("addTrip.address")}</Label>
 				<Input
 					id="address"
 					{...register("address")}
-					placeholder="e.g., 123 Main St"
+					placeholder={t("addTrip.addressPlaceholder")}
 					errorMessage={errors?.address?.message}
 				/>
 			</div>
 
 			<div className="space-y-2">
-				<Label htmlFor="country">Country *</Label>
+				<Label htmlFor="country">{t("addTrip.country")}</Label>
 				<Input
 					id="country"
 					{...register("country")}
-					placeholder="e.g., USA"
+					placeholder={t("addTrip.countryPlaceholder")}
 					errorMessage={errors?.country?.message}
 				/>
 			</div>
 
 			<div className="space-y-2">
-				<Label htmlFor="costPerPerson">Cost Per Person (€)</Label>
+				<Label htmlFor="costPerPerson">{t("addTrip.costPerPerson")}</Label>
 				<Input
 					id="costPerPerson"
 					{...register("costPerPerson", { valueAsNumber: true })}
@@ -143,12 +145,12 @@ export default function AddTripForm({
 					onCheckedChange={(checked) => setValue("indoor", !!checked)}
 				/>
 				<Label htmlFor="indoor" className="text-sm font-normal cursor-pointer">
-					Indoor activity
+					{t("addTrip.indoorActivity")}
 				</Label>
 			</div>
 
 			<div className="space-y-2">
-				<Label htmlFor="link">External Link</Label>
+				<Label htmlFor="link">{t("addTrip.externalLink")}</Label>
 				<Input
 					id="link"
 					{...register("link")}
@@ -159,18 +161,18 @@ export default function AddTripForm({
 			</div>
 
 			<div className="space-y-2">
-				<Label htmlFor="description">Description</Label>
+				<Label htmlFor="description">{t("addTrip.description")}</Label>
 				<Textarea
 					id="description"
 					{...register("description")}
-					placeholder="Tell us more about this activity..."
+					placeholder={t("addTrip.descriptionPlaceholder")}
 					errorMessage={errors?.description?.message}
 					rows={4}
 				/>
 			</div>
 
 			<Button type="submit" disabled={isPending} className="w-full">
-				{isPending ? "Adding Trip..." : "Add Trip"}
+				{isPending ? t("addTrip.submitting") : t("addTrip.submit")}
 			</Button>
 		</form>
 	);

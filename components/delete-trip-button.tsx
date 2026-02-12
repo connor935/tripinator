@@ -1,9 +1,10 @@
 "use client";
 
-import { useTransition } from "react";
 import { useRouter } from "next/navigation";
-import { Button } from "@/components/ui/button";
+import { useTransition } from "react";
+import { useTranslation } from "react-i18next";
 import { deleteTrip } from "@/app/_actions/actions";
+import { Button } from "@/components/ui/button";
 
 export function DeleteTripButton({
 	tripId,
@@ -14,13 +15,10 @@ export function DeleteTripButton({
 }) {
 	const [isPending, startTransition] = useTransition();
 	const router = useRouter();
+	const { t } = useTranslation();
 
 	const handleDelete = () => {
-		if (
-			!confirm(
-				`Are you sure you want to delete "${tripName}"? This action cannot be undone.`,
-			)
-		) {
+		if (!confirm(t("deleteTrip.confirmMessage", { name: tripName }))) {
 			return;
 		}
 
@@ -29,14 +27,16 @@ export function DeleteTripButton({
 			if (result.success) {
 				router.push("/");
 			} else {
-				alert(result.error || "Failed to delete trip");
+				alert(t("deleteTrip.failedToDelete"));
 			}
 		});
 	};
 
 	return (
 		<Button variant="destructive" onClick={handleDelete} disabled={isPending}>
-			{isPending ? "Deleting..." : "🗑️ Delete Trip"}
+			{isPending
+				? t("deleteTrip.deleting")
+				: `🗑️ ${t("deleteTrip.deleteButton")}`}
 		</Button>
 	);
 }

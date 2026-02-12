@@ -1,9 +1,10 @@
 "use client";
 
 import { useTransition } from "react";
-import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+import { useTranslation } from "react-i18next";
 import { deleteCategory } from "@/app/_actions/actions";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 export function CategoryCard({
 	id,
@@ -15,23 +16,22 @@ export function CategoryCard({
 	tripCount: number;
 }) {
 	const [isPending, startTransition] = useTransition();
+	const { t } = useTranslation();
 
 	const handleDelete = () => {
 		if (tripCount > 0) {
-			alert(
-				`Cannot delete "${name}" because it has ${tripCount} trip(s). Please delete or reassign the trips first.`,
-			);
+			alert(t("categoryCard.cannotDelete", { name, count: tripCount }));
 			return;
 		}
 
-		if (!confirm(`Are you sure you want to delete the category "${name}"?`)) {
+		if (!confirm(t("categoryCard.confirmDelete", { name }))) {
 			return;
 		}
 
 		startTransition(async () => {
 			const result = await deleteCategory(id);
 			if (!result.success) {
-				alert(result.error || "Failed to delete category");
+				alert(t("categoryCard.failedToDelete"));
 			}
 		});
 	};
@@ -54,7 +54,7 @@ export function CategoryCard({
 			</CardHeader>
 			<CardContent>
 				<p className="text-sm text-muted-foreground">
-					{tripCount} {tripCount === 1 ? "trip" : "trips"}
+					{t("categoryCard.tripCount", { count: tripCount })}
 				</p>
 			</CardContent>
 		</Card>

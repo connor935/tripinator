@@ -1,0 +1,106 @@
+{
+	"nav": {
+		"logo": "Trippinator",
+		"home": "Startseite",
+		"categories": "Kategorien",
+		"addTrip": "Ausflug hinzufügen"
+	},
+	"home": {
+		"heroTitle": "Wähle dein nächstes Abenteuer",
+		"allActivities": "Alle Aktivitäten ({{count}})",
+		"noActivities": "Noch keine Aktivitäten vorhanden. Füge deinen ersten Ausflug hinzu!"
+	},
+	"tripPicker": {
+		"pickActivity": "Aktivität auswählen",
+		"hideFilters": "Filter ausblenden",
+		"showFilters": "Filter anzeigen",
+		"activitiesAvailable_one": "{{count}} Aktivität verfügbar",
+		"activitiesAvailable_other": "{{count}} Aktivitäten verfügbar",
+		"noMatch": "Keine Ausflüge passen zu deinen Filtern!",
+		"indoorOutdoor": "Drinnen/Draußen",
+		"indoor": "Drinnen",
+		"outdoor": "Draußen",
+		"categoriesLabel": "Kategorien",
+		"maxCost": "Max. Kosten: {{value}} €",
+		"excludeRecent": "Ausflüge der letzten 30 Tage ausschließen",
+		"category": "Kategorie",
+		"location": "Ort",
+		"cost": "Kosten",
+		"costPerPerson": "{{cost}} € pro Person",
+		"type": "Art",
+		"description": "Beschreibung",
+		"lastDone": "Zuletzt gemacht",
+		"completedTimes": "{{count}} Mal abgeschlossen",
+		"pickAgain": "Nochmal wählen",
+		"markAsDone": "Als erledigt markieren",
+		"link": "Link"
+	},
+	"tripCard": {
+		"indoor": "Drinnen",
+		"outdoor": "Draußen",
+		"costPerPerson": "€{{cost}} pro Person",
+		"lastDone": "Zuletzt gemacht: {{date}}"
+	},
+	"tripDetails": {
+		"backToHome": "← Zurück zur Startseite",
+		"location": "Ort",
+		"cost": "Kosten",
+		"costPerPerson": "{{cost}} € pro Person",
+		"description": "Beschreibung",
+		"history": "Verlauf",
+		"lastDone": "Zuletzt gemacht: {{date}}",
+		"completedTimes": "{{count}} Mal abgeschlossen",
+		"markAsDone": "Als erledigt markieren",
+		"externalLink": "Externer Link",
+		"indoor": "Drinnen",
+		"outdoor": "Draußen"
+	},
+	"addTrip": {
+		"pageTitle": "Neuen Ausflug hinzufügen",
+		"noCategories": "Keine Kategorien gefunden. Bitte erstelle zuerst eine Kategorie.",
+		"tripName": "Name des Ausflugs *",
+		"tripNamePlaceholder": "z.B. Museumsbesuch",
+		"category": "Kategorie *",
+		"selectCategory": "Kategorie auswählen",
+		"address": "Adresse *",
+		"addressPlaceholder": "z.B. Hauptstraße 123",
+		"country": "Land *",
+		"countryPlaceholder": "z.B. Deutschland",
+		"costPerPerson": "Kosten pro Person (€)",
+		"indoorActivity": "Indoor-Aktivität",
+		"externalLink": "Externer Link",
+		"description": "Beschreibung",
+		"descriptionPlaceholder": "Erzähle uns mehr über diese Aktivität...",
+		"submitting": "Ausflug wird hinzugefügt...",
+		"submit": "Ausflug hinzufügen",
+		"failedToAdd": "Ausflug konnte nicht hinzugefügt werden. Bitte versuche es erneut."
+	},
+	"categories": {
+		"backToHome": "← Zurück zur Startseite",
+		"pageTitle": "Kategorien verwalten",
+		"pageDescription": "Organisiere deine Ausflüge, indem du Kategorien erstellst und verwaltest",
+		"addNewCategory": "Neue Kategorie hinzufügen",
+		"allCategories": "Alle Kategorien ({{count}})",
+		"noCategories": "Noch keine Kategorien vorhanden. Erstelle oben deine erste Kategorie!"
+	},
+	"categoryCard": {
+		"tripCount_one": "{{count}} Ausflug",
+		"tripCount_other": "{{count}} Ausflüge",
+		"cannotDelete": "\"{{name}}\" kann nicht gelöscht werden, da {{count}} Ausflüge zugeordnet sind. Bitte lösche oder verschiebe zuerst die Ausflüge.",
+		"confirmDelete": "Bist du sicher, dass du die Kategorie \"{{name}}\" löschen möchtest?",
+		"failedToDelete": "Kategorie konnte nicht gelöscht werden"
+	},
+	"addCategory": {
+		"placeholder": "Kategoriename (z.B. Museen, Restaurants)",
+		"submitting": "Wird hinzugefügt...",
+		"submit": "Kategorie hinzufügen",
+		"validationEmpty": "Bitte gib einen Kategorienamen ein",
+		"failedToCreate": "Kategorie konnte nicht erstellt werden"
+	},
+	"deleteTrip": {
+		"confirmMessage": "Bist du sicher, dass du \"{{name}}\" löschen möchtest? Diese Aktion kann nicht rückgängig gemacht werden.",
+		"deleting": "Wird gelöscht...",
+		"deleteButton": "Ausflug löschen",
+		"failedToDelete": "Ausflug konnte nicht gelöscht werden"
+	}
+}

@@ -1,18 +1,19 @@
 "use client";
 
 import { useState } from "react";
-import { Trip, Category } from "@/generated/prisma";
+import { useTranslation } from "react-i18next";
+import { markTripDone } from "@/app/_actions/actions";
 import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
 import {
 	Dialog,
 	DialogContent,
 	DialogHeader,
 	DialogTitle,
 } from "@/components/ui/dialog";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Slider } from "@/components/ui/slider";
 import { Label } from "@/components/ui/label";
-import { markTripDone } from "@/app/_actions/actions";
+import { Slider } from "@/components/ui/slider";
+import type { Category, Trip } from "@/generated/prisma";
 
 interface TripWithCategory extends Trip {
 	category: Category;
@@ -25,6 +26,7 @@ export function TripPicker({
 	trips: TripWithCategory[];
 	categories: Category[];
 }) {
+	const { t, i18n } = useTranslation();
 	const [selectedTrip, setSelectedTrip] = useState<TripWithCategory | null>(
 		null,
 	);
@@ -70,7 +72,7 @@ export function TripPicker({
 		const filtered = getFilteredTrips();
 
 		if (filtered.length === 0) {
-			alert("No trips match your filters!");
+			alert(t("tripPicker.noMatch"));
 			return;
 		}
 
@@ -94,7 +96,7 @@ export function TripPicker({
 				className="w-full text-xl py-8"
 				onClick={pickRandomTrip}
 			>
-				🎲 Pick an Activity
+				🎲 {t("tripPicker.pickActivity")}
 			</Button>
 
 			<div className="flex items-center justify-between gap-2">
@@ -103,11 +105,12 @@ export function TripPicker({
 					size="sm"
 					onClick={() => setShowFilters(!showFilters)}
 				>
-					{showFilters ? "Hide" : "Show"} Filters
+					{showFilters
+						? t("tripPicker.hideFilters")
+						: t("tripPicker.showFilters")}
 				</Button>
 				<p className="text-sm text-muted-foreground">
-					{filteredCount} {filteredCount === 1 ? "activity" : "activities"}{" "}
-					available
+					{t("tripPicker.activitiesAvailable", { count: filteredCount })}
 				</p>
 			</div>
 
@@ -115,7 +118,7 @@ export function TripPicker({
 				<div className="space-y-4 p-4 border rounded-lg">
 					{/* Indoor/Outdoor filter */}
 					<div className="space-y-2">
-						<Label>Indoor/Outdoor</Label>
+						<Label>{t("tripPicker.indoorOutdoor")}</Label>
 						<div className="flex gap-4">
 							<label className="flex items-center gap-2">
 								<Checkbox
@@ -127,7 +130,7 @@ export function TripPicker({
 										}))
 									}
 								/>
-								Indoor
+								{t("tripPicker.indoor")}
 							</label>
 							<label className="flex items-center gap-2">
 								<Checkbox
@@ -139,14 +142,14 @@ export function TripPicker({
 										}))
 									}
 								/>
-								Outdoor
+								{t("tripPicker.outdoor")}
 							</label>
 						</div>
 					</div>
 
 					{/* Category filter */}
 					<div className="space-y-2">
-						<Label>Categories</Label>
+						<Label>{t("tripPicker.categoriesLabel")}</Label>
 						{categories.map((cat) => (
 							<label key={cat.id} className="flex items-center gap-2">
 								<Checkbox
@@ -167,7 +170,7 @@ export function TripPicker({
 
 					{/* Max cost slider */}
 					<div className="space-y-2">
-						<Label>Max Cost: ${filters.maxCost}</Label>
+						<Label>{t("tripPicker.maxCost", { value: filters.maxCost })}</Label>
 						<Slider
 							value={[filters.maxCost]}
 							onValueChange={([value]) =>
@@ -187,7 +190,7 @@ export function TripPicker({
 								setFilters((f) => ({ ...f, excludeRecent: !!checked }))
 							}
 						/>
-						Exclude trips done in last 30 days
+						{t("tripPicker.excludeRecent")}
 					</label>
 				</div>
 			)}
@@ -200,45 +203,73 @@ export function TripPicker({
 					{selectedTrip && (
 						<div className="space-y-4">
 							<div>
-								<p className="text-sm text-muted-foreground">Category</p>
+								<p className="text-sm text-muted-foreground">
+									{t("tripPicker.category")}
+								</p>
 								<p>{selectedTrip.category.name}</p>
 							</div>
 							<div>
-								<p className="text-sm text-muted-foreground">Location</p>
+								<p className="text-sm text-muted-foreground">
+									{t("tripPicker.location")}
+								</p>
 								<p>
 									{selectedTrip.address}, {selectedTrip.country}
 								</p>
 							</div>
 							{selectedTrip.costPerPerson && (
 								<div>
-									<p className="text-sm text-muted-foreground">Cost</p>
-									<p>${selectedTrip.costPerPerson} per person</p>
+									<p className="text-sm text-muted-foreground">
+										{t("tripPicker.cost")}
+									</p>
+									<p>
+										{t("tripPicker.costPerPerson", {
+											cost: selectedTrip.costPerPerson,
+										})}
+									</p>
 								</div>
 							)}
 							<div>
-								<p className="text-sm text-muted-foreground">Type</p>
-								<p>{selectedTrip.indoor ? "🏠 Indoor" : "🌳 Outdoor"}</p>
+								<p className="text-sm text-muted-foreground">
+									{t("tripPicker.type")}
+								</p>
+								<p>
+									{selectedTrip.indoor
+										? `🏠 ${t("tripPicker.indoor")}`
+										: `🌳 ${t("tripPicker.outdoor")}`}
+								</p>
 							</div>
 							{selectedTrip.description && (
 								<div>
-									<p className="text-sm text-muted-foreground">Description</p>
+									<p className="text-sm text-muted-foreground">
+										{t("tripPicker.description")}
+									</p>
 									<p>{selectedTrip.description}</p>
 								</div>
 							)}
 							{selectedTrip.lastDone && (
 								<div>
-									<p className="text-sm text-muted-foreground">Last Done</p>
-									<p>{new Date(selectedTrip.lastDone).toLocaleDateString()}</p>
+									<p className="text-sm text-muted-foreground">
+										{t("tripPicker.lastDone")}
+									</p>
+									<p>
+										{new Date(selectedTrip.lastDone).toLocaleDateString(
+											i18n.language,
+										)}
+									</p>
 									<p className="text-xs">
-										Completed {selectedTrip.timesCompleted} times
+										{t("tripPicker.completedTimes", {
+											count: selectedTrip.timesCompleted,
+										})}
 									</p>
 								</div>
 							)}
 							<div className="flex gap-2">
 								<Button onClick={pickRandomTrip} variant="outline">
-									🎲 Pick Again
+									🎲 {t("tripPicker.pickAgain")}
 								</Button>
-								<Button onClick={handleMarkDone}>✅ Mark as Done</Button>
+								<Button onClick={handleMarkDone}>
+									✅ {t("tripPicker.markAsDone")}
+								</Button>
 								{selectedTrip.link && (
 									<Button asChild variant="secondary">
 										<a
@@ -246,7 +277,7 @@ export function TripPicker({
 											target="_blank"
 											rel="noopener noreferrer"
 										>
-											🔗 Link
+											🔗 {t("tripPicker.link")}
 										</a>
 									</Button>
 								)}
