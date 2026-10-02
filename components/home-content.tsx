@@ -1,13 +1,11 @@
 "use client";
 
+import { useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { TripCard } from "@/components/trip-card";
 import { TripPicker } from "@/components/trip-picker";
-import type { Category, Trip } from "@/generated/prisma";
-
-interface TripWithCategory extends Trip {
-	category: Category;
-}
+import { Input } from "@/components/ui/input";
+import type { Category, TripWithCategory } from "@/lib/db/schema";
 
 export function HomeContent({
 	trips,
@@ -17,6 +15,26 @@ export function HomeContent({
 	categories: Category[];
 }) {
 	const { t } = useTranslation();
+	const [query, setQuery] = useState("");
+
+	// Every whitespace-separated word must appear in name, category, address
+	// or country.
+	const visible = useMemo(() => {
+		const tokens = query.toLowerCase().split(/\s+/).filter(Boolean);
+		if (tokens.length === 0) return trips;
+		return trips.filter((trip) => {
+			const haystack = [
+				trip.name,
+				trip.category.name,
+				trip.address,
+				trip.country,
+			]
+				.filter(Boolean)
+				.join(" ")
+				.toLowerCase();
+			return tokens.every((token) => haystack.includes(token));
+		});
+	}, [trips, query]);
 
 	return (
 		<div className="container mx-auto px-4 py-8 space-y-8">
@@ -26,16 +44,31 @@ export function HomeContent({
 			</section>
 
 			<section>
-				<h2 className="text-2xl font-bold mb-4">
-					{t("home.allActivities", { count: trips.length })}
-				</h2>
+				<div className="mb-4 flex flex-wrap items-center justify-between gap-2">
+					<h2 className="text-2xl font-bold">
+						{t("home.allActivities", { count: trips.length })}
+					</h2>
+					{trips.length > 0 && (
+						<Input
+							type="search"
+							value={query}
+							onChange={(e) => setQuery(e.target.value)}
+							placeholder={t("home.search")}
+							className="w-64"
+						/>
+					)}
+				</div>
 				{trips.length === 0 ? (
 					<div className="text-center py-12 text-muted-foreground">
 						<p>{t("home.noActivities")}</p>
 					</div>
+				) : visible.length === 0 ? (
+					<div className="text-center py-12 text-muted-foreground">
+						<p>{t("home.noSearchResults")}</p>
+					</div>
 				) : (
 					<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-						{trips.map((trip) => (
+						{visible.map((trip) => (
 							<TripCard key={trip.id} trip={trip} />
 						))}
 					</div>

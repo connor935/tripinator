@@ -1,14 +1,19 @@
 {
 	"nav": {
-		"logo": "Trippinator",
+		"logo": "Tripinator",
 		"home": "Home",
 		"categories": "Categories",
-		"addTrip": "Add Trip"
+		"addTrip": "Add Trip",
+		"import": "Excel import",
+		"users": "Users",
+		"signOut": "Sign out"
 	},
 	"home": {
 		"heroTitle": "Choose Your Next Adventure",
 		"allActivities": "All Activities ({{count}})",
-		"noActivities": "No activities yet. Add your first trip to get started!"
+		"noActivities": "No activities yet. Add your first trip to get started!",
+		"search": "Search…",
+		"noSearchResults": "No matches."
 	},
 	"tripPicker": {
 		"pickActivity": "Pick an Activity",
@@ -21,31 +26,32 @@
 		"indoor": "Indoor",
 		"outdoor": "Outdoor",
 		"categoriesLabel": "Categories",
-		"maxCost": "Max Cost: {{value}} €",
+		"maxCost": "Max cost: {{value}}",
 		"excludeRecent": "Exclude trips done in last 30 days",
 		"category": "Category",
 		"location": "Location",
 		"cost": "Cost",
-		"costPerPerson": "{{cost}} € per person",
+		"costPerPerson": "{{cost}} per person",
 		"type": "Type",
 		"description": "Description",
 		"lastDone": "Last Done",
 		"completedTimes": "Completed {{count}} times",
 		"pickAgain": "Pick Again",
 		"markAsDone": "Mark as Done",
-		"link": "Link"
+		"link": "Link",
+		"markedDone": "Marked “{{name}}” as done"
 	},
 	"tripCard": {
 		"indoor": "Indoor",
 		"outdoor": "Outdoor",
-		"costPerPerson": "€{{cost}} per person",
+		"costPerPerson": "{{cost}} per person",
 		"lastDone": "Last done: {{date}}"
 	},
 	"tripDetails": {
 		"backToHome": "← Back to Home",
 		"location": "Location",
 		"cost": "Cost",
-		"costPerPerson": "{{cost}} € per person",
+		"costPerPerson": "{{cost}} per person",
 		"description": "Description",
 		"history": "History",
 		"lastDone": "Last done: {{date}}",
@@ -53,18 +59,19 @@
 		"markAsDone": "Mark as Done",
 		"externalLink": "External Link",
 		"indoor": "Indoor",
-		"outdoor": "Outdoor"
+		"outdoor": "Outdoor",
+		"edit": "Edit"
 	},
 	"addTrip": {
 		"pageTitle": "Add New Trip",
-		"noCategories": "No categories found. Please create a category first.",
+		"noCategories": "No categories yet. Create one first:",
 		"tripName": "Trip Name *",
 		"tripNamePlaceholder": "e.g., Museum Visit",
 		"category": "Category *",
 		"selectCategory": "Select a category",
-		"address": "Address *",
+		"address": "Address",
 		"addressPlaceholder": "e.g., 123 Main St",
-		"country": "Country *",
+		"country": "Country",
 		"countryPlaceholder": "e.g., USA",
 		"costPerPerson": "Cost Per Person (€)",
 		"indoorActivity": "Indoor activity",
@@ -72,8 +79,7 @@
 		"description": "Description",
 		"descriptionPlaceholder": "Tell us more about this activity...",
 		"submitting": "Adding Trip...",
-		"submit": "Add Trip",
-		"failedToAdd": "Failed to add trip. Please try again."
+		"submit": "Add Trip"
 	},
 	"categories": {
 		"backToHome": "← Back to Home",
@@ -87,20 +93,132 @@
 		"tripCount_one": "{{count}} trip",
 		"tripCount_other": "{{count}} trips",
 		"cannotDelete": "Cannot delete \"{{name}}\" because it has {{count}} trip(s). Please delete or reassign the trips first.",
-		"confirmDelete": "Are you sure you want to delete the category \"{{name}}\"?",
-		"failedToDelete": "Failed to delete category"
+		"confirmDelete": "Are you sure you want to delete the category \"{{name}}\"?"
 	},
 	"addCategory": {
 		"placeholder": "Category name (e.g., Museums, Restaurants)",
 		"submitting": "Adding...",
-		"submit": "Add Category",
-		"validationEmpty": "Please enter a category name",
-		"failedToCreate": "Failed to create category"
+		"submit": "Add Category"
 	},
 	"deleteTrip": {
 		"confirmMessage": "Are you sure you want to delete \"{{name}}\"? This action cannot be undone.",
 		"deleting": "Deleting...",
 		"deleteButton": "Delete Trip",
 		"failedToDelete": "Failed to delete trip"
+	},
+	"tripForm": {
+		"added": "Trip added",
+		"saved": "Changes saved",
+		"editTitle": "Edit “{{name}}”"
+	},
+	"common": {
+		"save": "Save",
+		"saving": "Saving…",
+		"delete": "Delete",
+		"rename": "Rename"
+	},
+	"validation": {
+		"required": "Required",
+		"tooLong": "Too long",
+		"number": "Please enter a number",
+		"notNegative": "Must not be negative",
+		"tooLarge": "Too large",
+		"url": "Invalid link (http/https)"
+	},
+	"errors": {
+		"generic": "Something went wrong",
+		"invalidInput": "Invalid input",
+		"notFound": "Not found",
+		"categoryExists": "This category already exists",
+		"categoryInUse": "Category still has trips"
+	},
+	"login": {
+		"email": "Email",
+		"password": "Password",
+		"submit": "Sign in",
+		"submitting": "Signing in…",
+		"failed": "Wrong email or password",
+		"noAccount": "No account? An admin creates one for you."
+	},
+	"account": {
+		"title": "Account",
+		"profile": "Profile",
+		"name": "Name",
+		"nameSaved": "Name saved",
+		"changePassword": "Change password",
+		"currentPassword": "Current password",
+		"newPassword": "New password (at least {{count}} characters)",
+		"passwordChanged": "Password changed"
+	},
+	"admin": {
+		"users": {
+			"title": "Users",
+			"description": "Registration is closed — accounts are created here. Share the temporary password; it can be changed under “Account”.",
+			"create": "Create user",
+			"created": "Account for {{name}} created",
+			"tempPassword": "Temporary password (at least {{count}} characters)",
+			"grantAdmin": "Grant admin role",
+			"setPassword": "Set password",
+			"setPasswordFor": "New password for {{name}}",
+			"passwordSet": "Password set for {{name}}",
+			"makeAdmin": "Make admin",
+			"revokeAdmin": "Revoke admin",
+			"roleChanged": "Changed role of {{name}}",
+			"confirmDelete": "Really delete the account of “{{name}}”?",
+			"deleted": "Deleted {{name}}"
+		}
+	},
+	"import": {
+		"title": "Excel import",
+		"description": "Import trips from an Excel file (.xlsx). You get a preview first — nothing is written until you click “Import”.",
+		"formatTitle": "Format",
+		"formatIntro": "First row = column headers, one row per trip. Order does not matter, unknown columns are ignored. Without a “Category” column the worksheet name is used as the category. Missing categories are created.",
+		"aliasHint": "Common header variants are recognised (e.g. “Price” for “Cost per person”, “Location” for “Address”, German names). Indoor: yes/no/x. Cost: 12.50 or “free”. Date: DD.MM.YYYY.",
+		"downloadTemplate": "Download template (.xlsx)",
+		"uploadTitle": "Upload file",
+		"analyze": "Create preview",
+		"analyzing": "Reading file…",
+		"previewTitle": "Preview",
+		"newCategories": "New categories: {{names}}",
+		"skippedSheets": "Skipped (no recognisable header row): {{names}}",
+		"updateExisting": "Update {{count}} existing trips with the values from the file (blank cells overwrite nothing)",
+		"colRow": "Row",
+		"colStatus": "Status",
+		"commit_one": "Import {{count}} trip",
+		"commit_other": "Import {{count}} trips",
+		"importing": "Importing…",
+		"done": "Import finished",
+		"resultSummary": "{{created}} created, {{updated}} updated, {{skipped}} skipped, {{categories}} new categories.",
+		"status": {
+			"new": "New",
+			"exists": "Exists",
+			"duplicate": "Duplicate in file",
+			"error": "Error"
+		},
+		"fields": {
+			"name": "trip name (required)",
+			"category": "category",
+			"costPerPerson": "cost per person in €",
+			"address": "address",
+			"country": "country",
+			"indoor": "indoor? yes/no",
+			"link": "website",
+			"description": "description",
+			"lastDone": "last done on",
+			"timesCompleted": "times done"
+		},
+		"errors": {
+			"noFile": "Please choose a file",
+			"tooLarge": "File is larger than 10 MB",
+			"unreadable": "Could not read the file — please save it as .xlsx",
+			"noRows": "No trips found — is there a “Name” column?",
+			"missingName": "Name missing",
+			"missingCategory": "Category missing",
+			"badCost": "Cannot read cost “{{value}}”",
+			"badIndoor": "Cannot read indoor “{{value}}” (yes/no)",
+			"badDate": "Cannot read date “{{value}}” (DD.MM.YYYY)",
+			"badCount": "Count “{{value}}” is not a whole number",
+			"badLink": "Invalid link “{{value}}”"
+		}
 	}
 }

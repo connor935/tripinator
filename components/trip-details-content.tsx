@@ -1,18 +1,26 @@
 "use client";
 
 import Link from "next/link";
+import { useTransition } from "react";
 import { useTranslation } from "react-i18next";
-import { markTripDone } from "@/app/_actions/actions";
+import { toast } from "sonner";
+import { markTripDone } from "@/app/_actions/trips";
 import { DeleteTripButton } from "@/components/delete-trip-button";
 import { Button } from "@/components/ui/button";
-import type { Category, Trip } from "@/generated/prisma";
-
-interface TripWithCategory extends Trip {
-	category: Category;
-}
+import type { TripWithCategory } from "@/lib/db/schema";
+import { formatCost } from "@/lib/utils";
 
 export function TripDetailsContent({ trip }: { trip: TripWithCategory }) {
 	const { t, i18n } = useTranslation();
+	const [isPending, startTransition] = useTransition();
+
+	const markDone = () =>
+		startTransition(async () => {
+			const result = await markTripDone(trip.id);
+			if (result.success)
+				toast.success(t("tripPicker.markedDone", { name: trip.name }));
+			else toast.error(t(result.error));
+		});
 
 	return (
 		<div className="container mx-auto px-4 py-8 max-w-3xl">
@@ -43,8 +51,8 @@ export function TripDetailsContent({ trip }: { trip: TripWithCategory }) {
 						<p className="text-sm text-muted-foreground">
 							{t("tripDetails.location")}
 						</p>
-						<p className="font-medium">{trip.address}</p>
-						<p className="text-sm">{trip.country}</p>
+						<p className="font-medium">{trip.address ?? "–"}</p>
+						{trip.country && <p className="text-sm">{trip.country}</p>}
 					</div>
 					{trip.costPerPerson !== null && (
 						<div>
@@ -53,7 +61,7 @@ export function TripDetailsContent({ trip }: { trip: TripWithCategory }) {
 							</p>
 							<p className="font-medium">
 								{t("tripDetails.costPerPerson", {
-									cost: trip.costPerPerson,
+									cost: formatCost(trip.costPerPerson, i18n.language),
 								})}
 							</p>
 						</div>
@@ -88,7 +96,7 @@ export function TripDetailsContent({ trip }: { trip: TripWithCategory }) {
 				)}
 
 				<div className="flex gap-2 flex-wrap">
-					<Button onClick={() => markTripDone(trip.id)}>
+					<Button onClick={markDone} disabled={isPending}>
 						✅ {t("tripDetails.markAsDone")}
 					</Button>
 					{trip.link && (
@@ -98,6 +106,11 @@ export function TripDetailsContent({ trip }: { trip: TripWithCategory }) {
 							</a>
 						</Button>
 					)}
+					<Button asChild variant="outline">
+						<Link href={`/trips/${trip.id}/edit`}>
+							✏️ {t("tripDetails.edit")}
+						</Link>
+					</Button>
 					<DeleteTripButton tripId={trip.id} tripName={trip.name} />
 				</div>
 			</div>

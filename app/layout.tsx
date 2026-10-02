@@ -1,25 +1,27 @@
 import type { Metadata } from "next";
+import { Toaster } from "sonner";
 import "./globals.css";
 import { I18nProvider } from "@/components/i18n-provider";
-import { Navigation } from "@/components/navigation";
+import { getLanguage } from "@/lib/i18n-server";
 
 export const metadata: Metadata = {
-	title: "Trippinator - Choose Your Next Adventure",
+	title: "Tripinator - Choose Your Next Adventure",
 	description:
 		"A web app to help you randomly choose your next activity or trip",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
 	children,
 }: Readonly<{
 	children: React.ReactNode;
 }>) {
+	const lang = await getLanguage();
 	return (
-		<html lang="en">
+		<html lang={lang}>
 			<body>
-				<I18nProvider>
-					<Navigation />
-					<main>{children}</main>
+				<I18nProvider lang={lang}>
+					{children}
+					<Toaster richColors position="top-center" />
 				</I18nProvider>
 			</body>
 		</html>

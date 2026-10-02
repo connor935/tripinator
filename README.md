@@ -1,36 +1,56 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Tripinator
 
-## Getting Started
+Shared list of trips and activities for a group of people — with a dice button that picks
+the next one at random (filterable by indoor/outdoor, category, max cost, "not in the last
+30 days"). German/English UI.
 
-First, run the development server:
+## Getting started
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+```sh
+npm install
+cp .env.example .env              # set BETTER_AUTH_SECRET (openssl rand -base64 32)
+npm run admin:create -- you@example.com "Your Name"   # prints a one-time password
+npm run dev                       # http://localhost:3000
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+No database server needed locally: `npm run dev` starts an embedded Postgres (PGlite) on port
+5434 with its data in `data/pglite`. Migrations are applied automatically on start.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Users
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Registration is closed. The first admin comes from `npm run admin:create`; after that, admins
+create accounts, reset passwords and grant admin rights on **/admin/users**. Everyone changes
+their own name and password on **/account**.
 
-## Learn More
+## Excel import
 
-To learn more about Next.js, take a look at the following resources:
+Admins import trips on **/admin/import**: upload an `.xlsx`, check the preview, then import.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- One row per trip, first row = headers. Columns are matched by name, in any order, German or
+  English: `Name` (required), `Kategorie`, `Kosten pro Person`, `Adresse`, `Land`, `Indoor`,
+  `Link`, `Beschreibung`, `Zuletzt gemacht`, `Anzahl`. Common variants work too (`Preis`,
+  `Ort`, `Webseite`, …). Title rows above the header row are skipped.
+- No category column → the worksheet name is the category (one tab per category works).
+  Missing categories are created.
+- Values are parsed leniently: `12,50 €`, `kostenlos`, `ja`/`nein`/`x`, `TT.MM.JJJJ` or real
+  date cells, hyperlink cells, `www.…` links. Anything that cannot be read is shown as an error
+  in the preview and not imported.
+- Trips that already exist (same name + category, case-insensitive) are skipped, or updated if
+  you tick the box — blank cells never erase existing data.
+- A template is downloadable on the import page.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Scripts
 
-## Deploy on Vercel
+```sh
+npm run dev / build / start
+npm run lint / format / typecheck   # biome, tsc
+npm run db:generate                 # after editing lib/db/schema.ts; commit drizzle/
+npm run db:serve                    # local DB only, e.g. for npm run db:studio
+npm run admin:create -- <email> <name>
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Deployment
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Same setup as Spoolhouse: pushing to `main` builds `ghcr.io/connor935/tripinator(-tools)` and
+deploys to the Hetzner box via SSH (`.github/workflows/deploy.yml`). The compose stack and the
+step-by-step guide live in the `server` repo under `tripinator/`.

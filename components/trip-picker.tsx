@@ -2,7 +2,8 @@
 
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { markTripDone } from "@/app/_actions/actions";
+import { toast } from "sonner";
+import { markTripDone } from "@/app/_actions/trips";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import {
@@ -13,11 +14,8 @@ import {
 } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
 import { Slider } from "@/components/ui/slider";
-import type { Category, Trip } from "@/generated/prisma";
-
-interface TripWithCategory extends Trip {
-	category: Category;
-}
+import type { Category, TripWithCategory } from "@/lib/db/schema";
+import { formatCost } from "@/lib/utils";
 
 export function TripPicker({
 	trips,
@@ -53,7 +51,7 @@ export function TripPicker({
 				!filters.categoryIds.includes(trip.categoryId)
 			)
 				return false;
-			if (trip.costPerPerson && trip.costPerPerson > filters.maxCost)
+			if (trip.costPerPerson !== null && trip.costPerPerson > filters.maxCost)
 				return false;
 			if (cutoffDate && trip.lastDone && trip.lastDone > cutoffDate)
 				return false;
@@ -72,7 +70,7 @@ export function TripPicker({
 		const filtered = getFilteredTrips();
 
 		if (filtered.length === 0) {
-			alert(t("tripPicker.noMatch"));
+			toast.info(t("tripPicker.noMatch"));
 			return;
 		}
 
@@ -85,7 +83,12 @@ export function TripPicker({
 
 	const handleMarkDone = async () => {
 		if (!selectedTrip) return;
-		await markTripDone(selectedTrip.id);
+		const result = await markTripDone(selectedTrip.id);
+		if (!result.success) {
+			toast.error(t(result.error));
+			return;
+		}
+		toast.success(t("tripPicker.markedDone", { name: selectedTrip.name }));
 		setSelectedTrip(null);
 	};
 
@@ -170,7 +173,11 @@ export function TripPicker({
 
 					{/* Max cost slider */}
 					<div className="space-y-2">
-						<Label>{t("tripPicker.maxCost", { value: filters.maxCost })}</Label>
+						<Label>
+							{t("tripPicker.maxCost", {
+								value: formatCost(filters.maxCost, i18n.language),
+							})}
+						</Label>
 						<Slider
 							value={[filters.maxCost]}
 							onValueChange={([value]) =>
@@ -213,17 +220,22 @@ export function TripPicker({
 									{t("tripPicker.location")}
 								</p>
 								<p>
-									{selectedTrip.address}, {selectedTrip.country}
+									{[selectedTrip.address, selectedTrip.country]
+										.filter(Boolean)
+										.join(", ") || "–"}
 								</p>
 							</div>
-							{selectedTrip.costPerPerson && (
+							{selectedTrip.costPerPerson !== null && (
 								<div>
 									<p className="text-sm text-muted-foreground">
 										{t("tripPicker.cost")}
 									</p>
 									<p>
 										{t("tripPicker.costPerPerson", {
-											cost: selectedTrip.costPerPerson,
+											cost: formatCost(
+												selectedTrip.costPerPerson,
+												i18n.language,
+											),
 										})}
 									</p>
 								</div>
@@ -263,7 +275,7 @@ export function TripPicker({
 									</p>
 								</div>
 							)}
-							<div className="flex gap-2">
+							<div className="flex flex-wrap gap-2">
 								<Button onClick={pickRandomTrip} variant="outline">
 									🎲 {t("tripPicker.pickAgain")}
 								</Button>

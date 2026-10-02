@@ -1,14 +1,19 @@
 {
 	"nav": {
-		"logo": "Trippinator",
+		"logo": "Tripinator",
 		"home": "Startseite",
 		"categories": "Kategorien",
-		"addTrip": "Ausflug hinzufügen"
+		"addTrip": "Ausflug hinzufügen",
+		"import": "Excel-Import",
+		"users": "Benutzer",
+		"signOut": "Abmelden"
 	},
 	"home": {
 		"heroTitle": "Wähle dein nächstes Abenteuer",
 		"allActivities": "Alle Aktivitäten ({{count}})",
-		"noActivities": "Noch keine Aktivitäten vorhanden. Füge deinen ersten Ausflug hinzu!"
+		"noActivities": "Noch keine Aktivitäten vorhanden. Füge deinen ersten Ausflug hinzu!",
+		"search": "Suchen…",
+		"noSearchResults": "Keine Treffer."
 	},
 	"tripPicker": {
 		"pickActivity": "Aktivität auswählen",
@@ -21,31 +26,32 @@
 		"indoor": "Drinnen",
 		"outdoor": "Draußen",
 		"categoriesLabel": "Kategorien",
-		"maxCost": "Max. Kosten: {{value}} €",
+		"maxCost": "Max. Kosten: {{value}}",
 		"excludeRecent": "Ausflüge der letzten 30 Tage ausschließen",
 		"category": "Kategorie",
 		"location": "Ort",
 		"cost": "Kosten",
-		"costPerPerson": "{{cost}} € pro Person",
+		"costPerPerson": "{{cost}} pro Person",
 		"type": "Art",
 		"description": "Beschreibung",
 		"lastDone": "Zuletzt gemacht",
 		"completedTimes": "{{count}} Mal abgeschlossen",
 		"pickAgain": "Nochmal wählen",
 		"markAsDone": "Als erledigt markieren",
-		"link": "Link"
+		"link": "Link",
+		"markedDone": "„{{name}}“ als erledigt markiert"
 	},
 	"tripCard": {
 		"indoor": "Drinnen",
 		"outdoor": "Draußen",
-		"costPerPerson": "€{{cost}} pro Person",
+		"costPerPerson": "{{cost}} pro Person",
 		"lastDone": "Zuletzt gemacht: {{date}}"
 	},
 	"tripDetails": {
 		"backToHome": "← Zurück zur Startseite",
 		"location": "Ort",
 		"cost": "Kosten",
-		"costPerPerson": "{{cost}} € pro Person",
+		"costPerPerson": "{{cost}} pro Person",
 		"description": "Beschreibung",
 		"history": "Verlauf",
 		"lastDone": "Zuletzt gemacht: {{date}}",
@@ -53,18 +59,19 @@
 		"markAsDone": "Als erledigt markieren",
 		"externalLink": "Externer Link",
 		"indoor": "Drinnen",
-		"outdoor": "Draußen"
+		"outdoor": "Draußen",
+		"edit": "Bearbeiten"
 	},
 	"addTrip": {
 		"pageTitle": "Neuen Ausflug hinzufügen",
-		"noCategories": "Keine Kategorien gefunden. Bitte erstelle zuerst eine Kategorie.",
+		"noCategories": "Keine Kategorien gefunden. Lege zuerst eine an:",
 		"tripName": "Name des Ausflugs *",
 		"tripNamePlaceholder": "z.B. Museumsbesuch",
 		"category": "Kategorie *",
 		"selectCategory": "Kategorie auswählen",
-		"address": "Adresse *",
+		"address": "Adresse",
 		"addressPlaceholder": "z.B. Hauptstraße 123",
-		"country": "Land *",
+		"country": "Land",
 		"countryPlaceholder": "z.B. Deutschland",
 		"costPerPerson": "Kosten pro Person (€)",
 		"indoorActivity": "Indoor-Aktivität",
@@ -72,8 +79,7 @@
 		"description": "Beschreibung",
 		"descriptionPlaceholder": "Erzähle uns mehr über diese Aktivität...",
 		"submitting": "Ausflug wird hinzugefügt...",
-		"submit": "Ausflug hinzufügen",
-		"failedToAdd": "Ausflug konnte nicht hinzugefügt werden. Bitte versuche es erneut."
+		"submit": "Ausflug hinzufügen"
 	},
 	"categories": {
 		"backToHome": "← Zurück zur Startseite",
@@ -87,20 +93,132 @@
 		"tripCount_one": "{{count}} Ausflug",
 		"tripCount_other": "{{count}} Ausflüge",
 		"cannotDelete": "\"{{name}}\" kann nicht gelöscht werden, da {{count}} Ausflüge zugeordnet sind. Bitte lösche oder verschiebe zuerst die Ausflüge.",
-		"confirmDelete": "Bist du sicher, dass du die Kategorie \"{{name}}\" löschen möchtest?",
-		"failedToDelete": "Kategorie konnte nicht gelöscht werden"
+		"confirmDelete": "Bist du sicher, dass du die Kategorie \"{{name}}\" löschen möchtest?"
 	},
 	"addCategory": {
 		"placeholder": "Kategoriename (z.B. Museen, Restaurants)",
 		"submitting": "Wird hinzugefügt...",
-		"submit": "Kategorie hinzufügen",
-		"validationEmpty": "Bitte gib einen Kategorienamen ein",
-		"failedToCreate": "Kategorie konnte nicht erstellt werden"
+		"submit": "Kategorie hinzufügen"
 	},
 	"deleteTrip": {
 		"confirmMessage": "Bist du sicher, dass du \"{{name}}\" löschen möchtest? Diese Aktion kann nicht rückgängig gemacht werden.",
 		"deleting": "Wird gelöscht...",
 		"deleteButton": "Ausflug löschen",
 		"failedToDelete": "Ausflug konnte nicht gelöscht werden"
+	},
+	"tripForm": {
+		"added": "Ausflug hinzugefügt",
+		"saved": "Änderungen gespeichert",
+		"editTitle": "„{{name}}“ bearbeiten"
+	},
+	"common": {
+		"save": "Speichern",
+		"saving": "Speichert…",
+		"delete": "Löschen",
+		"rename": "Umbenennen"
+	},
+	"validation": {
+		"required": "Pflichtfeld",
+		"tooLong": "Zu lang",
+		"number": "Bitte eine Zahl eingeben",
+		"notNegative": "Darf nicht negativ sein",
+		"tooLarge": "Zu groß",
+		"url": "Ungültiger Link (http/https)"
+	},
+	"errors": {
+		"generic": "Etwas ist schiefgelaufen",
+		"invalidInput": "Ungültige Eingabe",
+		"notFound": "Nicht gefunden",
+		"categoryExists": "Diese Kategorie gibt es schon",
+		"categoryInUse": "Kategorie hat noch Ausflüge"
+	},
+	"login": {
+		"email": "E-Mail",
+		"password": "Passwort",
+		"submit": "Anmelden",
+		"submitting": "Anmelden…",
+		"failed": "E-Mail oder Passwort falsch",
+		"noAccount": "Noch kein Konto? Ein Admin legt es für dich an."
+	},
+	"account": {
+		"title": "Konto",
+		"profile": "Profil",
+		"name": "Name",
+		"nameSaved": "Name gespeichert",
+		"changePassword": "Passwort ändern",
+		"currentPassword": "Aktuelles Passwort",
+		"newPassword": "Neues Passwort (mind. {{count}} Zeichen)",
+		"passwordChanged": "Passwort geändert"
+	},
+	"admin": {
+		"users": {
+			"title": "Benutzer",
+			"description": "Registrierung ist geschlossen – Konten werden hier angelegt. Gib das temporäre Passwort weiter; es kann unter „Konto“ geändert werden.",
+			"create": "Benutzer anlegen",
+			"created": "Konto für {{name}} angelegt",
+			"tempPassword": "Temporäres Passwort (mind. {{count}} Zeichen)",
+			"grantAdmin": "Admin-Rechte vergeben",
+			"setPassword": "Passwort setzen",
+			"setPasswordFor": "Neues Passwort für {{name}}",
+			"passwordSet": "Passwort für {{name}} gesetzt",
+			"makeAdmin": "Zum Admin machen",
+			"revokeAdmin": "Admin entziehen",
+			"roleChanged": "Rolle von {{name}} geändert",
+			"confirmDelete": "Konto von „{{name}}“ wirklich löschen?",
+			"deleted": "{{name}} gelöscht"
+		}
+	},
+	"import": {
+		"title": "Excel-Import",
+		"description": "Ausflüge aus einer Excel-Datei (.xlsx) importieren. Du siehst vorher eine Vorschau – erst „Importieren“ schreibt in die Datenbank.",
+		"formatTitle": "Format",
+		"formatIntro": "Erste Zeile = Spaltenüberschriften, eine Zeile pro Ausflug. Reihenfolge egal, unbekannte Spalten werden ignoriert. Fehlt die Spalte „Kategorie“, wird der Name des Tabellenblatts als Kategorie verwendet. Fehlende Kategorien werden angelegt.",
+		"aliasHint": "Übliche Varianten der Überschriften werden erkannt (z. B. „Preis“ statt „Kosten pro Person“, „Ort“ statt „Adresse“, englische Namen). Indoor: ja/nein/x. Kosten: 12,50 oder „kostenlos“. Datum: TT.MM.JJJJ.",
+		"downloadTemplate": "Vorlage herunterladen (.xlsx)",
+		"uploadTitle": "Datei hochladen",
+		"analyze": "Vorschau erstellen",
+		"analyzing": "Datei wird gelesen…",
+		"previewTitle": "Vorschau",
+		"newCategories": "Neue Kategorien: {{names}}",
+		"skippedSheets": "Ohne erkennbare Überschriften übersprungen: {{names}}",
+		"updateExisting": "{{count}} bereits vorhandene Ausflüge mit den Werten aus der Datei aktualisieren (leere Zellen überschreiben nichts)",
+		"colRow": "Zeile",
+		"colStatus": "Status",
+		"commit_one": "{{count}} Ausflug importieren",
+		"commit_other": "{{count}} Ausflüge importieren",
+		"importing": "Importiere…",
+		"done": "Import abgeschlossen",
+		"resultSummary": "{{created}} neu, {{updated}} aktualisiert, {{skipped}} übersprungen, {{categories}} neue Kategorien.",
+		"status": {
+			"new": "Neu",
+			"exists": "Vorhanden",
+			"duplicate": "Doppelt in Datei",
+			"error": "Fehler"
+		},
+		"fields": {
+			"name": "Name des Ausflugs (Pflicht)",
+			"category": "Kategorie",
+			"costPerPerson": "Kosten pro Person in €",
+			"address": "Adresse",
+			"country": "Land",
+			"indoor": "drinnen? ja/nein",
+			"link": "Webseite",
+			"description": "Beschreibung",
+			"lastDone": "zuletzt gemacht am",
+			"timesCompleted": "wie oft schon gemacht"
+		},
+		"errors": {
+			"noFile": "Bitte eine Datei auswählen",
+			"tooLarge": "Datei ist größer als 10 MB",
+			"unreadable": "Datei konnte nicht gelesen werden – bitte als .xlsx speichern",
+			"noRows": "Keine Ausflüge gefunden – gibt es eine Spalte „Name“?",
+			"missingName": "Name fehlt",
+			"missingCategory": "Kategorie fehlt",
+			"badCost": "Kosten „{{value}}“ unverständlich",
+			"badIndoor": "Indoor „{{value}}“ unverständlich (ja/nein)",
+			"badDate": "Datum „{{value}}“ unverständlich (TT.MM.JJJJ)",
+			"badCount": "Anzahl „{{value}}“ ist keine ganze Zahl",
+			"badLink": "Link „{{value}}“ ungültig"
+		}
 	}
 }

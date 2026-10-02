@@ -3,7 +3,8 @@
 import { useRouter } from "next/navigation";
 import { useTransition } from "react";
 import { useTranslation } from "react-i18next";
-import { deleteTrip } from "@/app/_actions/actions";
+import { toast } from "sonner";
+import { deleteTrip } from "@/app/_actions/trips";
 import { Button } from "@/components/ui/button";
 
 export function DeleteTripButton({
@@ -27,7 +28,7 @@ export function DeleteTripButton({
 			if (result.success) {
 				router.push("/");
 			} else {
-				alert(t("deleteTrip.failedToDelete"));
+				toast.error(t("deleteTrip.failedToDelete"));
 			}
 		});
 	};
