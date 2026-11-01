@@ -13,7 +13,8 @@
 		"admin:create": "tsx scripts/create-admin.ts",
 		"lint": "biome check",
 		"format": "biome format --write",
-		"typecheck": "tsc --noEmit"
+		"typecheck": "tsc --noEmit",
+		"db:seed": "tsx scripts/seed.ts"
 	},
 	"dependencies": {
 		"@hookform/resolvers": "^5.2.1",
