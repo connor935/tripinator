@@ -17,6 +17,7 @@
 	},
 	"tripPicker": {
 		"pickActivity": "Pick an Activity",
+		"rolling": "Rolling…",
 		"hideFilters": "Hide Filters",
 		"showFilters": "Show Filters",
 		"activitiesAvailable_one": "{{count}} activity available",

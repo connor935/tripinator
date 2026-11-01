@@ -17,6 +17,7 @@
 	},
 	"tripPicker": {
 		"pickActivity": "Aktivität auswählen",
+		"rolling": "Würfle …",
 		"hideFilters": "Filter ausblenden",
 		"showFilters": "Filter anzeigen",
 		"activitiesAvailable_one": "{{count}} Aktivität verfügbar",
