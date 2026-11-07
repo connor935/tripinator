@@ -60,7 +60,8 @@ Without `DATABASE_URL`/`DATABASE_PASSWORD_FILE`, the local PGlite host
 
 ## Deployment
 
-`.github/workflows/deploy.yml` builds `ghcr.io/connor935/tripinator` (runner) and
+`.github/workflows/deploy.yml`: a `check` job (typecheck, Biome, and on PRs a full `next build`)
+gates everything and is the only job that runs on PRs. Pushes to `main` then build `ghcr.io/connor935/tripinator` (runner) and
 `tripinator-tools` (builder, for migrate/admin), then SSHes to the box, runs the migration and
 `docker compose up -d` in `$STACK_DIR`. Compose stack + guide: `server` repo,
 `tripinator/`.
