@@ -3,11 +3,8 @@
 import Link from "next/link";
 import { useTranslation } from "react-i18next";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import type { Category, Trip } from "@/generated/prisma";
-
-interface TripWithCategory extends Trip {
-	category: Category;
-}
+import type { TripWithCategory } from "@/lib/db/schema";
+import { formatCost } from "@/lib/utils";
 
 export function TripCard({ trip }: { trip: TripWithCategory }) {
 	const { t, i18n } = useTranslation();
@@ -29,12 +26,16 @@ export function TripCard({ trip }: { trip: TripWithCategory }) {
 								: `🌳 ${t("tripCard.outdoor")}`}
 						</span>
 					</div>
-					<p className="text-sm text-muted-foreground">
-						{trip.address}, {trip.country}
-					</p>
-					{trip.costPerPerson && (
+					{(trip.address || trip.country) && (
+						<p className="text-sm text-muted-foreground">
+							{[trip.address, trip.country].filter(Boolean).join(", ")}
+						</p>
+					)}
+					{trip.costPerPerson !== null && (
 						<p className="text-sm font-semibold">
-							{t("tripCard.costPerPerson", { cost: trip.costPerPerson })}
+							{t("tripCard.costPerPerson", {
+								cost: formatCost(trip.costPerPerson, i18n.language),
+							})}
 						</p>
 					)}
 					{trip.lastDone && (

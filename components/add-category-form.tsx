@@ -2,7 +2,8 @@
 
 import { useState, useTransition } from "react";
 import { useTranslation } from "react-i18next";
-import { createCategory } from "@/app/_actions/actions";
+import { toast } from "sonner";
+import { createCategory } from "@/app/_actions/categories";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
@@ -13,18 +14,14 @@ export function AddCategoryForm() {
 
 	const handleSubmit = (e: React.FormEvent) => {
 		e.preventDefault();
-
-		if (!name.trim()) {
-			alert(t("addCategory.validationEmpty"));
-			return;
-		}
+		if (!name.trim()) return;
 
 		startTransition(async () => {
 			const result = await createCategory(name.trim());
 			if (result.success) {
 				setName("");
 			} else {
-				alert(t("addCategory.failedToCreate"));
+				toast.error(t(result.error));
 			}
 		});
 	};

@@ -8,13 +8,13 @@ import { CategoryCard } from "@/components/category-card";
 interface CategoryWithCount {
 	id: string;
 	name: string;
-	_count: { trips: number };
+	tripCount: number;
 }
 
 export function CategoriesContent({
-	categoriesWithCount,
+	categories,
 }: {
-	categoriesWithCount: CategoryWithCount[];
+	categories: CategoryWithCount[];
 }) {
 	const { t } = useTranslation();
 
@@ -44,21 +44,21 @@ export function CategoriesContent({
 				<div>
 					<h2 className="text-lg font-semibold mb-3">
 						{t("categories.allCategories", {
-							count: categoriesWithCount.length,
+							count: categories.length,
 						})}
 					</h2>
-					{categoriesWithCount.length === 0 ? (
+					{categories.length === 0 ? (
 						<div className="text-center py-12 text-muted-foreground border rounded-lg">
 							<p>{t("categories.noCategories")}</p>
 						</div>
 					) : (
 						<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-							{categoriesWithCount.map((category) => (
+							{categories.map((category) => (
 								<CategoryCard
 									key={category.id}
 									id={category.id}
 									name={category.name}
-									tripCount={category._count.trips}
+									tripCount={category.tripCount}
 								/>
 							))}
 						</div>

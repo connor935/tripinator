@@ -1,10 +1,12 @@
 "use client";
 
-import { useTransition } from "react";
+import { useState, useTransition } from "react";
 import { useTranslation } from "react-i18next";
-import { deleteCategory } from "@/app/_actions/actions";
+import { toast } from "sonner";
+import { deleteCategory, renameCategory } from "@/app/_actions/categories";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
 
 export function CategoryCard({
 	id,
@@ -16,41 +18,80 @@ export function CategoryCard({
 	tripCount: number;
 }) {
 	const [isPending, startTransition] = useTransition();
+	const [editing, setEditing] = useState(false);
+	const [draft, setDraft] = useState(name);
 	const { t } = useTranslation();
 
 	const handleDelete = () => {
 		if (tripCount > 0) {
-			alert(t("categoryCard.cannotDelete", { name, count: tripCount }));
+			toast.error(t("categoryCard.cannotDelete", { name, count: tripCount }));
 			return;
 		}
-
-		if (!confirm(t("categoryCard.confirmDelete", { name }))) {
-			return;
-		}
+		if (!confirm(t("categoryCard.confirmDelete", { name }))) return;
 
 		startTransition(async () => {
 			const result = await deleteCategory(id);
-			if (!result.success) {
-				alert(t("categoryCard.failedToDelete"));
-			}
+			if (!result.success) toast.error(t(result.error));
+		});
+	};
+
+	const handleRename = (e: React.FormEvent) => {
+		e.preventDefault();
+		if (!draft.trim() || draft.trim() === name) {
+			setEditing(false);
+			return;
+		}
+		startTransition(async () => {
+			const result = await renameCategory(id, draft);
+			if (result.success) setEditing(false);
+			else toast.error(t(result.error));
 		});
 	};
 
 	return (
 		<Card>
 			<CardHeader>
-				<CardTitle className="flex items-center justify-between">
-					<span>{name}</span>
-					<Button
-						variant="ghost"
-						size="sm"
-						onClick={handleDelete}
-						disabled={isPending}
-						className="text-red-600 hover:text-red-700 hover:bg-red-50"
-					>
-						{isPending ? "..." : "🗑️"}
-					</Button>
-				</CardTitle>
+				{editing ? (
+					<form onSubmit={handleRename} className="flex gap-2">
+						<Input
+							value={draft}
+							onChange={(e) => setDraft(e.target.value)}
+							disabled={isPending}
+							autoFocus
+						/>
+						<Button type="submit" size="sm" disabled={isPending}>
+							{t("common.save")}
+						</Button>
+					</form>
+				) : (
+					<CardTitle className="flex items-center justify-between gap-2">
+						<span>{name}</span>
+						<span className="flex">
+							<Button
+								variant="ghost"
+								size="sm"
+								onClick={() => {
+									setDraft(name);
+									setEditing(true);
+								}}
+								disabled={isPending}
+								aria-label={t("common.rename")}
+							>
+								✏️
+							</Button>
+							<Button
+								variant="ghost"
+								size="sm"
+								onClick={handleDelete}
+								disabled={isPending}
+								aria-label={t("common.delete")}
+								className="text-red-600 hover:bg-red-50 hover:text-red-700"
+							>
+								{isPending ? "..." : "🗑️"}
+							</Button>
+						</span>
+					</CardTitle>
+				)}
 			</CardHeader>
 			<CardContent>
 				<p className="text-sm text-muted-foreground">
