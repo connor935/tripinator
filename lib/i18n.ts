@@ -32,7 +32,6 @@ export function createI18n(lng: Language, plugin?: Module): I18n {
 		fallbackLng: "en",
 		interpolation: { escapeValue: false },
 		initAsync: false,
-		showSupportNotice: false,
 	});
 	return instance;
 }
