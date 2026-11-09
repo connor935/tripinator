@@ -48,9 +48,3 @@ npm run db:generate                 # after editing lib/db/schema.ts; commit dri
 npm run db:serve                    # local DB only, e.g. for npm run db:studio
 npm run admin:create -- <email> <name>
 ```
-
-## Deployment
-
-Same setup as Spoolhouse: pushing to `main` builds `ghcr.io/connor935/tripinator(-tools)` and
-deploys to the Hetzner box via SSH (`.github/workflows/deploy.yml`). The compose stack and the
-step-by-step guide live in the `server` repo under `tripinator/`.
